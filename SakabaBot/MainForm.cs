@@ -150,7 +150,8 @@ namespace SakabaBot
             var clock = new Clock();
             await clock.InitializeAsync();
 
-            string dingdong = (randomizer.Next(10) > 1) ? clock.Roar : clock.Dead;
+            int hour = DateTime.UtcNow.AddHours(9).Hour;
+            string dingdong = (randomizer.Next(9) > 1) ? $"{clock.Roar} ({hour}:00)" : clock.Dead;
             await clock.MastodonClient.PostStatus(dingdong, Visibility.Public);
         }
 

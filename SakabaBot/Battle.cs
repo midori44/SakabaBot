@@ -55,20 +55,10 @@ namespace SakabaBot
                     await End(true);
                     return;
                 }
-                await MastodonClient.PostStatus($"@{status.Account.AccountName} {Account.Roar}", Visibility.Public, replyStatusId: status.Id);
+                await MastodonClient.PostStatus($"@{status.Account.AccountName} {Account.Roar}", Visibility.Public);
             };
 
             await UserStreaming.Start();
-
-            //PublicStreaming = MastodonClient.GetPublicStreaming();
-            //PublicStreaming.OnUpdate += async (sender, e) =>
-            //{
-            //    if (DateTime.UtcNow > postStatus.CreatedAt.AddSeconds(10))
-            //    {
-            //        await End(false);
-            //    }
-            //};
-            //await PublicStreaming.Start();
         }
 
         public async Task End(bool success)
@@ -76,10 +66,6 @@ namespace SakabaBot
             if (IsRunning)
             {
                 IsRunning = false;
-                if (UserStreaming != null)
-                {
-                    UserStreaming.Stop();
-                }
 
                 if (success)
                 {
@@ -94,6 +80,10 @@ namespace SakabaBot
                     await MastodonClient.PostStatus($"（{Account.Name}は去って行った...）", Visibility.Public);
                 }
 
+                if (UserStreaming != null)
+                {
+                    UserStreaming.Stop();
+                }
             }
         }
     }
