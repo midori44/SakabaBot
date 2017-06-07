@@ -7,7 +7,7 @@ namespace SakabaBot
 {
     class Battle
     {
-        static int limmitTime = 900_000;
+        static int limmitTime = 1800_000;
 
         TimelineStreaming UserStreaming;
         MastodonClient MastodonClient;
@@ -33,8 +33,17 @@ namespace SakabaBot
             AttackCount = 0;
             IsRunning = true;
 
+
             var postStatus = await MastodonClient.PostStatus(Account.Roar, Visibility.Public);
             string accoutName = postStatus.Account.UserName;
+            int accountId = postStatus.Account.Id;
+
+            // 過去トゥートの削除
+            var statuses = await MastodonClient.GetAccountStatuses(accountId, postStatus.Id);
+            foreach (var status in statuses)
+            {
+                await MastodonClient.DeleteStatus(status.Id);
+            }
 
             UserStreaming = MastodonClient.GetUserStreaming();
             UserStreaming.OnNotification += async (sender, e) =>

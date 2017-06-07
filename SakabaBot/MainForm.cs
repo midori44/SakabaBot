@@ -48,13 +48,9 @@ namespace SakabaBot
             }
             
         }
-        private async void BattleForceButton_Click(object sender, EventArgs e)
+        private void BattleForceButton_Click(object sender, EventArgs e)
         {
-            BattleTimer.Stop();
-            timeLabel.Text = "zombie";
-            await ZombieRun();
-
-            timeLeft = randomizer.Next(min, max);
+            timeLeft = 0;
             timeLabel.Text = timeLeft.ToString();
             BattleTimer.Interval = 1000;
             BattleTimer.Start();
