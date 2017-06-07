@@ -1,4 +1,5 @@
 ﻿using Mastonet;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -77,7 +78,20 @@ namespace SakabaBot
                 }
                 else
                 {
-                    await MastodonClient.PostStatus($"（{Account.Name}は去って行った...）", Visibility.Public);
+                    string message = $"（{Account.Name}は去って行った...）";
+
+                    var random = new Random();
+                    int num = random.Next(5);
+                    if (num == 0)
+                    {
+                        message = $"（{Account.Name}は壁に穴を開けて去って行った...）";
+                    }
+                    else if (num == 1)
+                    {
+                        message = $"（{Account.Name}は食料を奪って去って行った...）";
+                    }
+
+                    await MastodonClient.PostStatus(message, Visibility.Public);
                 }
 
                 if (UserStreaming != null)

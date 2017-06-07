@@ -57,8 +57,10 @@
   <ItemGroup>
     <Compile Include="Account\Account.cs" />
     <Compile Include="Account\Clock.cs" />
+    <Compile Include="Account\Rat.cs" />
     <Compile Include="Account\Record.cs" />
     <Compile Include="Account\Master.cs" />
+    <Compile Include="Account\Skeleton.cs" />
     <Compile Include="Account\Zombie.cs" />
     <Compile Include="Battle.cs" />
     <Compile Include="BattleResult.cs" />

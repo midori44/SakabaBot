@@ -13,8 +13,8 @@ namespace SakabaBot
 {
     public partial class MainForm : Form
     {
-        static int min = 3600;
-        static int max = 7200;
+        static int min = 14400; // 4時間
+        static int max = 21600; // 6時間
 
         Random randomizer = new Random();
         int timeLeft = 0;
@@ -107,8 +107,29 @@ namespace SakabaBot
             else
             {
                 BattleTimer.Stop();
-                timeLabel.Text = "zombie";
-                await ZombieRun();
+                int random = randomizer.Next(10);
+                switch (random)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        timeLabel.Text = "zombie";
+                        await ZombieRun();
+                        break;
+                    case 5:
+                    case 6:
+                    case 7:
+                        timeLabel.Text = "rat";
+                        await RatRun();
+                        break;
+                    case 8:
+                    case 9:
+                        timeLabel.Text = "skeleton";
+                        await SkeletonRun();
+                        break;
+                }
 
                 timeLeft = randomizer.Next(min, max);
                 BattleTimer.Start();
@@ -144,6 +165,22 @@ namespace SakabaBot
             var battle = new Battle(zombie);
             await battle.Start();
         }
+        private async Task SkeletonRun()
+        {
+            var skeleton = new Skeleton();
+            await skeleton.InitializeAsync();
+
+            var battle = new Battle(skeleton);
+            await battle.Start();
+        }
+        private async Task RatRun()
+        {
+            var rat = new Rat();
+            await rat.InitializeAsync();
+
+            var battle = new Battle(rat);
+            await battle.Start();
+        }
 
         private async Task ClockRun()
         {
@@ -151,7 +188,7 @@ namespace SakabaBot
             await clock.InitializeAsync();
 
             int hour = DateTime.UtcNow.AddHours(9).Hour;
-            string dingdong = (randomizer.Next(9) > 1) ? $"{clock.Roar} ({hour}:00)" : clock.Dead;
+            string dingdong = (randomizer.Next(10) > 1) ? $"{clock.Roar} ({hour}:00)" : clock.Dead;
             await clock.MastodonClient.PostStatus(dingdong, Visibility.Public);
         }
 
