@@ -1,7 +1,7 @@
-﻿using Mastonet;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mastonet;
 
 namespace SakabaBot
 {
@@ -73,40 +73,38 @@ namespace SakabaBot
 
         public async Task End(bool success)
         {
-            if (IsRunning)
+            if (!IsRunning) { return; }
+
+            IsRunning = false;
+            if (success)
             {
-                IsRunning = false;
+                await MastodonClient.PostStatus(Account.Dead, Visibility.Public);
 
-                if (success)
+                var record = new Record();
+                await record.InitializeAsync();
+
+                await record.PostResultAsync(Account.Name, Results);
+            }
+            else
+            {
+                string message = $"（{Account.Name}は去って行った...）";
+
+                int num = new Random().Next(10);
+                if (num == 0)
                 {
-                    await MastodonClient.PostStatus(Account.Dead, Visibility.Public);
-
-                    var record = new Record();
-                    await record.InitializeAsync();
-                    await record.PostResultAsync(Account.Name, Results);
+                    message = $"（{Account.Name}は壁に穴を開けて去って行った...）";
                 }
-                else
+                else if (num == 1)
                 {
-                    string message = $"（{Account.Name}は去って行った...）";
-
-                    var random = new Random();
-                    int num = random.Next(5);
-                    if (num == 0)
-                    {
-                        message = $"（{Account.Name}は壁に穴を開けて去って行った...）";
-                    }
-                    else if (num == 1)
-                    {
-                        message = $"（{Account.Name}は食料を奪って去って行った...）";
-                    }
-
-                    await MastodonClient.PostStatus(message, Visibility.Public);
+                    message = $"（{Account.Name}は食料を奪って去って行った...）";
                 }
 
-                if (UserStreaming != null)
-                {
-                    UserStreaming.Stop();
-                }
+                await MastodonClient.PostStatus(message, Visibility.Public);
+            }
+
+            if (UserStreaming != null)
+            {
+                UserStreaming.Stop();
             }
         }
     }

@@ -36,8 +36,6 @@
             this.ClockButton = new System.Windows.Forms.Button();
             this.clockLabel = new System.Windows.Forms.Label();
             this.ClockTimer = new System.Windows.Forms.Timer(this.components);
-            this.ReportButton = new System.Windows.Forms.Button();
-            this.ReportTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // BattleStartButton
@@ -96,26 +94,11 @@
             // 
             this.ClockTimer.Tick += new System.EventHandler(this.ClockTimer_Tick);
             // 
-            // ReportButton
-            // 
-            this.ReportButton.Location = new System.Drawing.Point(12, 119);
-            this.ReportButton.Name = "ReportButton";
-            this.ReportButton.Size = new System.Drawing.Size(75, 23);
-            this.ReportButton.TabIndex = 7;
-            this.ReportButton.Text = "Report";
-            this.ReportButton.UseVisualStyleBackColor = true;
-            this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
-            // 
-            // ReportTimer
-            // 
-            this.ReportTimer.Tick += new System.EventHandler(this.ReportTimer_Tick);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.ReportButton);
             this.Controls.Add(this.clockLabel);
             this.Controls.Add(this.ClockButton);
             this.Controls.Add(this.BattleForceButton);
@@ -137,8 +120,6 @@
         private System.Windows.Forms.Button ClockButton;
         private System.Windows.Forms.Label clockLabel;
         private System.Windows.Forms.Timer ClockTimer;
-        private System.Windows.Forms.Button ReportButton;
-        private System.Windows.Forms.Timer ReportTimer;
     }
 }
 

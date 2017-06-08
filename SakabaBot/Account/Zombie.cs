@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SakabaBot
 {
-    class Zombie:Account
+    class Zombie : Account
     {
         public Zombie()
         {

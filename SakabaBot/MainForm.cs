@@ -1,13 +1,7 @@
-﻿using Mastonet;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mastonet;
 
 namespace SakabaBot
 {
@@ -31,21 +25,20 @@ namespace SakabaBot
 
         private void BattleStartButton_Click(object sender, EventArgs e)
         {
-            if (timeLabel.Text == "Off")
-            {
-                if (timeLeft == 0)
-                {
-                    timeLeft = randomizer.Next(min, max);
-                    timeLabel.Text = timeLeft.ToString();
-                }
-                BattleTimer.Interval = 1000;
-                BattleTimer.Start();
-            }
-            else
+            if (timeLabel.Text != "Off")
             {
                 BattleTimer.Stop();
                 timeLabel.Text = "Off";
+                return;
             }
+
+            if (timeLeft == 0)
+            {
+                timeLeft = randomizer.Next(min, max);
+                timeLabel.Text = timeLeft.ToString();
+            }
+            BattleTimer.Interval = 1000;
+            BattleTimer.Start();
             
         }
         private void BattleForceButton_Click(object sender, EventArgs e)
@@ -57,37 +50,17 @@ namespace SakabaBot
         }
         private void ClockButton_Click(object sender, EventArgs e)
         {
-            if (clockLabel.Text == "Off")
-            {
-                ClockTimer.Interval = 1000;
-                ClockTimer.Start();
-                clockLabel.Text = "On";
-            }
-            else
+            if (clockLabel.Text != "Off")
             {
                 ClockTimer.Stop();
                 clockLabel.Text = "Off";
+                return;
             }
+
+            ClockTimer.Interval = 1000;
+            ClockTimer.Start();
+            clockLabel.Text = "On";
         }
-        private async void ReportButton_Click(object sender, EventArgs e)
-        {
-            var master = new Master();
-            await master.InitializeAsync();
-
-            var option = new ArrayOptions();
-            var timeline = master.MastodonClient.GetPublicTimeline();
-
-            var stream = master.MastodonClient.GetPublicStreaming();
-            stream.OnUpdate += (_sender, _e) =>
-            {
-                var status = _e.Status;
-                var user = status.Account;
-            };
-
-            await stream.Start();
-        }
-
-
 
 
 
@@ -99,37 +72,36 @@ namespace SakabaBot
             {
                 timeLeft = timeLeft - 1;
                 timeLabel.Text = timeLeft.ToString();
+                return;
             }
-            else
-            {
-                BattleTimer.Stop();
-                int random = randomizer.Next(10);
-                switch (random)
-                {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                        timeLabel.Text = "zombie";
-                        await ZombieRun();
-                        break;
-                    case 5:
-                    case 6:
-                    case 7:
-                        timeLabel.Text = "rat";
-                        await RatRun();
-                        break;
-                    case 8:
-                    case 9:
-                        timeLabel.Text = "skeleton";
-                        await SkeletonRun();
-                        break;
-                }
 
-                timeLeft = randomizer.Next(min, max);
-                BattleTimer.Start();
+            BattleTimer.Stop();
+            int random = randomizer.Next(10);
+            switch (random)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    timeLabel.Text = "zombie";
+                    await ZombieRun();
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                    timeLabel.Text = "rat";
+                    await RatRun();
+                    break;
+                case 8:
+                case 9:
+                    timeLabel.Text = "skeleton";
+                    await SkeletonRun();
+                    break;
             }
+
+            timeLeft = randomizer.Next(min, max);
+            BattleTimer.Start();
         }
         private async void ClockTimer_Tick(object sender, EventArgs e)
         {
@@ -145,10 +117,7 @@ namespace SakabaBot
                 ClockTimer.Start();
             }
         }
-        private void ReportTimer_Tick(object sender, EventArgs e)
-        {
 
-        }
 
 
 
@@ -177,7 +146,6 @@ namespace SakabaBot
             var battle = new Battle(rat);
             await battle.Start();
         }
-
         private async Task ClockRun()
         {
             var clock = new Clock();
@@ -185,16 +153,14 @@ namespace SakabaBot
 
             int hour = DateTime.UtcNow.AddHours(9).Hour;
             string dingdong = (randomizer.Next(10) > 1) ? $"{clock.Roar} ({hour}:00)" : clock.Dead;
-            await clock.MastodonClient.PostStatus(dingdong, Visibility.Public);
+            var postStatus = await clock.MastodonClient.PostStatus(dingdong, Visibility.Public);
+
+            var statuses = await clock.MastodonClient.GetAccountStatuses(postStatus.Account.Id, postStatus.Id);
+            foreach (var status in statuses)
+            {
+                await clock.MastodonClient.DeleteStatus(status.Id);
+            }
         }
-
-        private async Task ReportRun()
-        {
-            var record = new Record();
-            await record.InitializeAsync();
-
-        }
-
 
     }
 }

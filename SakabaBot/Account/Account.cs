@@ -1,9 +1,5 @@
-﻿using Mastonet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Mastonet;
 
 namespace SakabaBot
 {
@@ -12,7 +8,6 @@ namespace SakabaBot
         protected string Email { get; set; }
         protected string Password { get; set; }
         public MastodonClient MastodonClient { get; private set; }
-        protected TimelineStreaming TimelineStreaming { get; set; }
         public int LifePoint { get; set; }
         public string Roar { get; set; }
         public string Dead { get; set; }
