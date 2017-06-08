@@ -7,8 +7,8 @@ namespace SakabaBot
 {
     public partial class MainForm : Form
     {
-        static int min = 14400; // 4時間
-        static int max = 21600; // 6時間
+        static int min = 7200; // 2時間
+        static int max = 14400; // 4時間
 
         Random randomizer = new Random();
         int timeLeft = 0;
@@ -84,17 +84,18 @@ namespace SakabaBot
                 case 2:
                 case 3:
                 case 4:
+                case 5:
                     timeLabel.Text = "zombie";
                     await ZombieRun();
                     break;
-                case 5:
                 case 6:
                 case 7:
+                case 8:
                     timeLabel.Text = "rat";
                     await RatRun();
                     break;
-                case 8:
                 case 9:
+                default:
                     timeLabel.Text = "skeleton";
                     await SkeletonRun();
                     break;
