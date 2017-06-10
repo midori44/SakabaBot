@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Mastonet;
 
 namespace SakabaBot
@@ -8,10 +9,13 @@ namespace SakabaBot
         protected string Email { get; set; }
         protected string Password { get; set; }
         public MastodonClient MastodonClient { get; private set; }
+        public string Name { get; set; }
+        public int Rank { get; set; }
         public int LifePoint { get; set; }
         public string Roar { get; set; }
         public string Dead { get; set; }
-        public string Name { get; set; }
+        public string[] Actions { get; set; }
+
 
         public async Task InitializeAsync()
         {
@@ -21,7 +25,14 @@ namespace SakabaBot
 
             MastodonClient = new MastodonClient(registration, auth);
         }
-
         
+        public string GetAction()
+        {
+            if (Actions == null) { return ""; }
+
+            var random = new Random();
+            string action = Actions[random.Next(Actions.Length)];
+            return $"（{Name}は{action}）";
+        }
     }
 }

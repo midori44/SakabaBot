@@ -18,7 +18,7 @@ namespace SakabaBot
             LifePoint = 999;
         }
 
-        public async Task PostResultAsync(string name, IEnumerable<BattleResult> results)
+        public async Task PostResultAsync(Account account, IEnumerable<BattleResult> results)
         {
             if (!results.Any()) { return; }
 
@@ -28,11 +28,17 @@ namespace SakabaBot
             string lastContent = Regex.Replace(results.Last().Content, "<span.*</span>", "");
             lastContent = Regex.Replace(lastContent, "<.*?>", "").Trim();
 
-            string result = new StringBuilder()
-                .AppendLine($"【{name} を倒した！】")
-                .AppendLine($"参加人数: {num}人 ({users})")
-                .AppendLine($"最後の一撃: @{lastUser} 「{lastContent}」")
-                .ToString();
+            string drop = ItemFactory.Create(account.Rank);
+
+            var builder = new StringBuilder()
+                .AppendLine($"【{account.Name}を倒した！】");
+            if (drop != "")
+            {
+                builder.AppendLine($"「{drop}」を手に入れた");
+            }
+            builder.AppendLine($"参加人数: {num}人 ({users})")
+                .AppendLine($"最後の一撃: @{lastUser} 「{lastContent}」");
+            string result = builder.ToString();
 
             await MastodonClient.PostStatus(result, Visibility.Public);
         }

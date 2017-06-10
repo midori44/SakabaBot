@@ -14,8 +14,14 @@ namespace SakabaBot
             Password = Constant.Password;
             Name = "ゾンビ";
             LifePoint = 2;
+            Rank = 1;
             Roar = "ｳｱｱｧｧ";
             Dead = "ｵｵｫ...";
+            Actions = new string[] {
+                "ウロウロしている",
+                "叫んでいる",
+                "じっとしている",
+            };
         }
     }
 }

@@ -7,7 +7,8 @@ namespace SakabaBot
 {
     class Battle
     {
-        static int limmitTime = 1800_000;
+        static int actionTime = 600_000; // 10分
+        static int limmitTime = 1200_000; // 20分
 
         TimelineStreaming UserStreaming;
         MastodonClient MastodonClient;
@@ -22,8 +23,14 @@ namespace SakabaBot
             MastodonClient = account.MastodonClient;
 
             Task.Run(async () => {
-                await Task.Delay(limmitTime);
-                await End(false);
+                await Task.Delay(actionTime);
+                if (IsRunning)
+                {
+                    await MastodonClient.PostStatus(Account.GetAction(), Visibility.Public);
+
+                    await Task.Delay(limmitTime);
+                    await End(false);
+                }
             });
         }
 
@@ -83,21 +90,25 @@ namespace SakabaBot
                 var record = new Record();
                 await record.InitializeAsync();
 
-                await record.PostResultAsync(Account.Name, Results);
+                await record.PostResultAsync(Account, Results);
             }
             else
             {
-                string message = $"（{Account.Name}は去って行った...）";
-
-                int num = new Random().Next(10);
-                if (num == 0)
+                string option;
+                int random = new Random().Next(5);
+                switch (random)
                 {
-                    message = $"（{Account.Name}は壁に穴を開けて去って行った...）";
+                    case 0:
+                        option = "壁に穴を開けて";
+                        break;
+                    case 1:
+                        option = "食料を奪って";
+                        break;
+                    default:
+                        option = "";
+                        break;
                 }
-                else if (num == 1)
-                {
-                    message = $"（{Account.Name}は食料を奪って去って行った...）";
-                }
+                string message = $"（{Account.Name}は{option}去って行った...）";
 
                 await MastodonClient.PostStatus(message, Visibility.Public);
             }

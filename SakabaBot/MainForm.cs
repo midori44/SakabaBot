@@ -7,8 +7,8 @@ namespace SakabaBot
 {
     public partial class MainForm : Form
     {
-        static int min = 7200; // 2時間
-        static int max = 14400; // 4時間
+        static int min = 10800; // 3時間
+        static int max = 18000; // 5時間
 
         Random randomizer = new Random();
         int timeLeft = 0;
@@ -19,7 +19,7 @@ namespace SakabaBot
             InitializeComponent();
 
 #if DEBUG
-            this.Text += " [DEBUG]";
+            this.Text = "DEBUG";
 #endif
         }
 
