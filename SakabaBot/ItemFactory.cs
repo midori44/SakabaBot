@@ -35,10 +35,13 @@ namespace SakabaBot
             "ラピスラズリ",
 
             "銅",
+            "青銅",
             "鉄",
             "鋼",
             "鉛",
             "鋼鉄",
+            "鎖",
+            "鏡",
 
             "骨",
             "獣骨",
@@ -51,6 +54,7 @@ namespace SakabaBot
             "象牙",
             "孔雀羽",
             "貝殻",
+            "甲羅",
 
             "木",
             "カシ",
@@ -83,12 +87,17 @@ namespace SakabaBot
             "短剣",
             "大剣",
             "細剣",
+            "ナイフ",
             "刀",
             "斧",
+            "大斧",
             "槍",
+            "双槍",
             "弓",
+            "大弓",
             "矢",
             "杖",
+            "爪",
             "鎧",
             "胸当て",
             "盾",
@@ -103,6 +112,7 @@ namespace SakabaBot
             "地図",
             "鍵",
             "よく分からないもの",
+            "偽物",
             "塊",
             "塊",
             "破片",
@@ -117,10 +127,11 @@ namespace SakabaBot
             "壊れかけた",
             "呪われた",
             "古びた",
-            "謎の",
             "輝く",
-            "偽物っぽい",
             "高そうな",
+            "欠けた",
+            "血塗られた",
+            "",
             "",
             "",
             "",
@@ -146,7 +157,7 @@ namespace SakabaBot
         static public string Create(int rank)
         {
             var random = new Random();
-            if (random.Next(100) < 30)
+            if (random.Next(100) < 50)
             {
                 return "";
             }
