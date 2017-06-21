@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mastonet;
@@ -39,7 +41,7 @@ namespace SakabaBot
             }
             BattleTimer.Interval = 1000;
             BattleTimer.Start();
-            
+
         }
         private void BattleForceButton_Click(object sender, EventArgs e)
         {
@@ -163,5 +165,28 @@ namespace SakabaBot
             }
         }
 
+        private void WatchRun()
+        {
+            string url = "http://api.openweathermap.org/data/2.5/weather?q=Fukuoka&APPID=" + Constant.OpenWeatherMapId;
+            var request = WebRequest.Create(url);
+
+            using (var response = request.GetResponse())
+            using (var resStream = response.GetResponseStream())
+            {
+                var serializer = new DataContractJsonSerializer(typeof(OpenWeatherMap));
+                var info = (OpenWeatherMap)serializer.ReadObject(resStream);
+
+                int code = info.weather[0].id / 100;
+            }
+        }
+
+
     }
+
+
+
+
+
+    
+
 }

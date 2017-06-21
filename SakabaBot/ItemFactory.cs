@@ -157,7 +157,7 @@ namespace SakabaBot
         static public string Create(int rank)
         {
             var random = new Random();
-            if (random.Next(100) < 50)
+            if (random.Next(100) > 50)
             {
                 return "";
             }
