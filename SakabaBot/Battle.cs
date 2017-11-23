@@ -43,7 +43,7 @@ namespace SakabaBot
 
             var postStatus = await MastodonClient.PostStatus(Account.Roar, Visibility.Public);
             string accoutName = postStatus.Account.UserName;
-            int accountId = postStatus.Account.Id;
+            long accountId = postStatus.Account.Id;
 
             // 過去トゥートの削除
             var statuses = await MastodonClient.GetAccountStatuses(accountId, postStatus.Id);

@@ -36,6 +36,8 @@
             this.ClockButton = new System.Windows.Forms.Button();
             this.clockLabel = new System.Windows.Forms.Label();
             this.ClockTimer = new System.Windows.Forms.Timer(this.components);
+            this.CardsButton = new System.Windows.Forms.Button();
+            this.cardsLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // BattleStartButton
@@ -94,11 +96,32 @@
             // 
             this.ClockTimer.Tick += new System.EventHandler(this.ClockTimer_Tick);
             // 
+            // CardsButton
+            // 
+            this.CardsButton.Location = new System.Drawing.Point(12, 119);
+            this.CardsButton.Name = "CardsButton";
+            this.CardsButton.Size = new System.Drawing.Size(75, 23);
+            this.CardsButton.TabIndex = 7;
+            this.CardsButton.Text = "Cards";
+            this.CardsButton.UseVisualStyleBackColor = true;
+            this.CardsButton.Click += new System.EventHandler(this.CardsButton_Click);
+            // 
+            // cardsLabel
+            // 
+            this.cardsLabel.AutoSize = true;
+            this.cardsLabel.Location = new System.Drawing.Point(93, 124);
+            this.cardsLabel.Name = "cardsLabel";
+            this.cardsLabel.Size = new System.Drawing.Size(21, 12);
+            this.cardsLabel.TabIndex = 8;
+            this.cardsLabel.Text = "Off";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.cardsLabel);
+            this.Controls.Add(this.CardsButton);
             this.Controls.Add(this.clockLabel);
             this.Controls.Add(this.ClockButton);
             this.Controls.Add(this.BattleForceButton);
@@ -120,6 +143,8 @@
         private System.Windows.Forms.Button ClockButton;
         private System.Windows.Forms.Label clockLabel;
         private System.Windows.Forms.Timer ClockTimer;
+        private System.Windows.Forms.Button CardsButton;
+        private System.Windows.Forms.Label cardsLabel;
     }
 }
 

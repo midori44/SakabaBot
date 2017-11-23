@@ -63,7 +63,24 @@ namespace SakabaBot
             ClockTimer.Start();
             clockLabel.Text = "On";
         }
+        private Cards cards;
+        private async void CardsButton_Click(object sender, EventArgs e)
+        {
+            if (cards == null)
+            {
+                cards = new Cards();
+            }
 
+            if (clockLabel.Text != "Off")
+            {
+                cards.Stop();
+                clockLabel.Text = "Off";
+                return;
+            }
+
+            clockLabel.Text = "On";
+            await cards.Start();
+        }
 
 
 
@@ -180,7 +197,7 @@ namespace SakabaBot
             }
         }
 
-
+        
     }
 
 
