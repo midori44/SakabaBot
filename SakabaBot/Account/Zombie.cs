@@ -13,7 +13,7 @@ namespace SakabaBot
             Email = Constant.ZombieEmail;
             Password = Constant.Password;
             Name = "ゾンビ";
-            LifePoint = 2;
+            LifePoint = 1;
             Rank = 1;
             Roar = "ｳｱｱｧｧ";
             Dead = "ｵｵｫ...";

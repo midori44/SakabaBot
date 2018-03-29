@@ -13,7 +13,7 @@ namespace SakabaBot
             Email = Constant.SkeletonEmail;
             Password = Constant.Password;
             Name = "スケルトン";
-            LifePoint = 3;
+            LifePoint = 2;
             Rank = 2;
             Roar = "ｶｶｶｶｶ";
             Dead = "ｶﾗｶﾗ...";
